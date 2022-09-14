@@ -1,5 +1,5 @@
 //fetch movie data base for only movies from the horror genre
-
+import { useState, useEffect } from "react"
 import { Movie } from "./Movie"
 
 //
@@ -11,10 +11,10 @@ export const MovieList = () => {
 
     useEffect(
         () => {
-            fetch(`https://api.themoviedb.org/3/discover/movie?api_key=87b7aa024b105f288752b38c3a90101d&with_genres=27&language=en-US`)
+            fetch(`https://api.themoviedb.org/3/discover/movie?api_key=87b7aa024b105f288752b38c3a90101d&with_genres=27&language=en-US&page=1`)
                 .then(response => response.json())
-                .then((horrorArray) => {
-                    setMovies(horrorArray)
+                .then((horrorListObj) => {
+                    setMovies(horrorListObj.results)
                 })
         
         }, [])
@@ -23,14 +23,18 @@ export const MovieList = () => {
       
         <h2>List of Movies</h2>
 
-        <article className="tickets">
+        <article className="movies">
             {
                 movies.map(
-                    (movie) => <Movie users={users}
-                    getAllTickets={getAllTickets}
-                    currentUser={honeyUserObject} 
-                    ticketObject={ticket} />
+                    (movie) => <Movie key={`movie--${movie.id}`}
+                    id={movie.id}
+                    image={`https://image.tmdb.org/t/p/w154${movie.poster_path}`}
+                    title={movie.title} 
+                    releaseDate={movie.release_date}
+                    description={movie.overview}
+                     />
                 )
+               
             }
         </article>
         </>
