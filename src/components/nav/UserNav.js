@@ -9,6 +9,9 @@ export const UserNav = () => {
             <li className="navbar__item active">
                 <Link className="navbar__link" to="/users">Users</Link>
             </li>
+            <li className="navbar__item active">
+                <Link className="navbar__link" to="/movies">Movies</Link>
+            </li>
             {
                 localStorage.getItem("reaper_user")
                     ? <li className="navbar__item navbar__logout">
