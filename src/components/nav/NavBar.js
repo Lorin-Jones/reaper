@@ -3,8 +3,11 @@ import { UserNav } from "./UserNav"
 import "./NavBar.css"
 
 export const NavBar = () => {
-    const localHoneyUser = localStorage.getItem("honey_user")
-    const honeyUserObject = JSON.parse(localHoneyUser)
+    const localReaperUser = localStorage.getItem("reaper_user")
+    const reaperUserObject = JSON.parse(localReaperUser)
 
-    return UserNav()
+    if (reaperUserObject) {
+        return UserNav()
+
+    }
 }

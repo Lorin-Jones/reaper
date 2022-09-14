@@ -5,5 +5,8 @@ export const ApplicationViews = () => {
     const localReaperUser = localStorage.getItem("reaper_user")
     const reaperUserObject = JSON.parse(localReaperUser)
 
-    return UserViews()
+    if (reaperUserObject) {
+        return UserViews()
+
+    }
 }

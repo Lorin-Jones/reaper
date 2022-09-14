@@ -1,4 +1,6 @@
 import { Outlet, Route, Routes } from "react-router-dom"
+import { UserList } from "../users/UserList"
+import { UserProfile } from "../users/UserProfile"
 // import { Profile } from "../profile/Profile"
 
 export const UserViews = () => {
@@ -14,7 +16,7 @@ export const UserViews = () => {
             }>
 
                 
-                {/* <Route path="profile" element={ <Profile /> } /> */}
+                <Route path="/users" element={ <UserList /> } />
             </Route>
         </Routes>
     )
