@@ -17,6 +17,7 @@ export const Login = () => {
                     const user = foundUsers[0]
                     localStorage.setItem("reaper_user", JSON.stringify({
                         id: user.id,
+                        fullName: user.fullName
                     }))
 
                     navigate("/")

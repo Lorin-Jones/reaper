@@ -1,61 +1,67 @@
 import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 export const EventForm = () => {
     // TODO: Provide initial state for profile
-    const [event, setEvent] = useState({
+    const [eventObj, setEvent] = useState({
         name: "",
         date: "",
-        hostId: 0,
+        time: "",
+        userId: 0,
     })
 
+    const navigate = useNavigate()
     const localReaperUser = localStorage.getItem("reaper_user")
     const reaperUserObject = JSON.parse(localReaperUser)
-    const [feedback, setFeedback] = useState("")
+    // const [feedback, setFeedback] = useState("")
 
-    useEffect(() => {
-        if (feedback !== "") {
-            // Clear feedback to make entire element disappear after 3 seconds
-            setTimeout(() => setFeedback(""), 3000);
-        }
-    }, [feedback])
+    // useEffect(() => {
+    //     if (feedback !== "") {
+    //         // Clear feedback to make entire element disappear after 3 seconds
+    //         setTimeout(() => setFeedback(""), 3000);
+    //     }
+    // }, [feedback])
 
     // TODO: Get employee profile info from API and update state
-    useEffect(() => {
-        fetch(`http://localhost:8088/users?userId=${reaperUserObject.id}`)
-           .then(response => response.json())
-           .then((data) => {
-               const userObject = data[0]
-               updateProfile(userObject)
-           })
-    }, [])
-
-
+    // useEffect(() => {
+    //     fetch(`http://localhost:8088/users?userId=${reaperUserObject.id}`)
+    //        .then(response => response.json())
+    //        .then((data) => {
+    //            const userObject = data[0]
+    //            setProfile(userObject)
+    //        })
+    // }, [])
+  
     const handleSaveButtonClick = (event) => {
         event.preventDefault()
 
-        /*
-            TODO: Perform the PUT fetch() call here to update the profile.
-            Navigate user to home page when done.
-        */
-       return fetch(``, {
+    
+        const eventToSendToApi = {
+            name: eventObj.name,
+            date: eventObj.date,
+            time: eventObj.time,
+            userId: reaperUserObject.id
+        }
+        return fetch(`http://localhost:8088/events`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(event)
-       })
-           .then(response => response.json())
-           .then(() => {
-                setFeedback("New Event Created")
-           })
+            body: JSON.stringify(eventToSendToApi)
+        })
+            .then(response => response.json())
+            .then(() => {
+                navigate("/events")
+                // setFeedback("New Event Created")
+            })
     }
 
     return (
         <>
-         <div className={`${feedback.includes("Error") ? "error" : "feedback"} ${feedback === "" ? "invisible" : "visible"}`}>
+         {/* <div className={`${feedback.includes("Error") ? "error" : "feedback"} ${feedback === "" ? "invisible" : "visible"}`}>
                 {feedback}
          </div>
-        
+         */}
         <form className="event">
             <h2 className="event__title">New Event</h2>
             <fieldset>
@@ -65,27 +71,42 @@ export const EventForm = () => {
                         required autoFocus
                         type="text"
                         className="form-control"
-                        value={event.name}
+                        value={eventObj.name}
                         onChange={
                             (evt) => {
-                                const copy = {...profile}
-                                copy.specialty = evt.target.value
-                                updateProfile(copy)
+                                const copy = {...eventObj}
+                                copy.name = evt.target.value
+                                setEvent(copy)
                             }
                         } />
                 </div>
             </fieldset>
             <fieldset>
                 <div className="form-group">
-                    <label htmlFor="name">Hourly rate:</label>
-                    <input type="number"
+                    <label htmlFor="date">Date:</label>
+                    <input type="date"
                         className="form-control"
-                        value={profile.rate}
+                        value={eventObj.date}
                         onChange={
                             (evt) => {
-                                const copy = {...profile}
-                                copy.rate = parseFloat(evt.target.value, 2)
-                                updateProfile(copy)
+                                const copy = {...eventObj}
+                                copy.date = evt.target.value
+                                setEvent(copy)
+                            }
+                        } />
+                </div>
+            </fieldset>
+            <fieldset>
+                <div className="form-group">
+                    <label htmlFor="time">Time:</label>
+                    <input type="time"
+                        className="form-control"
+                        value={eventObj.time}
+                        onChange={
+                            (evt) => {
+                                const copy = {...eventObj}
+                                copy.time = evt.target.value
+                                setEvent(copy)
                             }
                         } />
                 </div>
@@ -93,7 +114,7 @@ export const EventForm = () => {
             <button
                 onClick={(clickEvent) => handleSaveButtonClick(clickEvent)}
                 className="btn btn-primary">
-                Save Profile
+                Save Event
             </button>
         </form>
         </>
