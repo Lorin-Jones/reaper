@@ -20,6 +20,7 @@ export const UserProfile = () => {
         
         <label>Name: {profile.fullName}</label>    
         <div>Email: {profile.email}</div>
+        <div></div>
                 
     </section>
 }

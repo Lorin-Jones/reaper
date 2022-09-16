@@ -1,8 +1,8 @@
 //fetch movie data base for only movies from the horror genre
 import { useState, useEffect } from "react"
 import { Movie } from "./Movie"
+import "./Movies.css"
 
-//
 export const MovieList = () => {
     const [movies, setMovies] = useState([])
 
