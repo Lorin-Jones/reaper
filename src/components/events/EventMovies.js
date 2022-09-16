@@ -2,20 +2,20 @@ import { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
 import "./WatchList.css"
 
-export const WatchList = ({}) => {
+export const EventDetails = ({}) => {
 
     
-        const [listMovies, setList] = useState([])
+        const [eventMovies, setEventMovies] = useState([])
         const [filteredMovies, setFiltered] = useState([])
         
         const localReaperUser = localStorage.getItem("reaper_user")
         const reaperUserObject = JSON.parse(localReaperUser)
 
     useEffect(() => {
-        fetch(`http://localhost:8088/watchList?_expand=user&userId=${reaperUserObject.id}`)
+        fetch(`http://localhost:8088/eventMovies?_expand=event&eventId=${reaperUserObject.id}`)
             .then(response => response.json())
-            .then((listArray) => {
-                setList(listArray)
+            .then((eventArray) => {
+                setEventMovies(eventArray)
             })
        
     }, [])
