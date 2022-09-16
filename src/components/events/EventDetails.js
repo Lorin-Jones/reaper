@@ -7,7 +7,7 @@ export const EventDetails = () => {
 
     useEffect(
         () => {
-            fetch(`http://localhost:8088/eventMovies?_expand=event&eventId=${eventId}`)
+            fetch(`http://localhost:8088/events?id=${eventId}&_expand=user&_embed=eventMovies`)
                 .then(response => response.json())
                 .then((data) => {
                     const singleEvent = data[0]
@@ -18,10 +18,10 @@ export const EventDetails = () => {
     )
 
     return <section className="event">
-    <header className="event_header">{event?.user?.fullName}</header>
-    <div>Email: {employee?.user?.email}</div>
-    <div>Specialty: {employee.specialty}</div>
-    <div>Rate: {employee.rate}</div>
-    <footer className="employee__footer">Currently working on {employee?.employeeTickets?.length} tickets.</footer>
+    <header className="event_header">{event?.name}</header>
+    <div>Hosted By {event?.user?.fullName}</div>
+    <div>Location: {event?.user?.address}</div>
+    <div>Date: {event.date}</div>
+    <div>Time: {event.time}</div>
 </section>
 }

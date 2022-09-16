@@ -1,4 +1,5 @@
 import { Outlet, Route, Routes } from "react-router-dom"
+import { EventDetails } from "../events/EventDetails"
 import { EventForm } from "../events/EventForm"
 // import { EventForm } from "../events/EventForm"
 
@@ -29,6 +30,7 @@ export const UserViews = () => {
                 <Route path="/watchlist" element={ <WatchList /> } />
                 <Route path="/movies/:movieId" element={ <MovieDetails /> } />
                 <Route path="/events" element={ <EventList />} />
+                <Route path="events/:eventId" element={ <EventDetails />} />
                 <Route path="/new-event" element={ <EventForm /> } /> 
             </Route>
         </Routes>
