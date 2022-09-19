@@ -21,6 +21,7 @@ export const UserNav = () => {
             <li className="navbar__item active">
                 <Link className="navbar__link" to="/new-event">Create Event</Link>
             </li>
+            
             {
                 localStorage.getItem("reaper_user")
                     ? <li className="navbar__item navbar__logout">
