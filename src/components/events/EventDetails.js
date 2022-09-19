@@ -1,9 +1,16 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 
+import { EventGuests } from "./EventGuests"
+
+import { EventUsersList } from "./EventUsersList"
+
 export const EventDetails = () => {
     const {eventId} = useParams()
     const [event, updateEvent] = useState({})
+
+    const localReaperUser = localStorage.getItem("reaper_user")
+        const reaperUserObject = JSON.parse(localReaperUser)
 
     useEffect(
         () => {
@@ -17,11 +24,24 @@ export const EventDetails = () => {
         [eventId]
     )
 
-    return <section className="event">
+    return <><section className="event">
     <header className="event_header">{event?.name}</header>
     <div>Hosted By {event?.user?.fullName}</div>
     <div>Location: {event?.user?.address}</div>
     <div>Date: {event.date}</div>
     <div>Time: {event.time}</div>
-</section>
+    
+    </section>
+        {
+            reaperUserObject.id === event.userId
+            ? <>
+                <EventUsersList />
+                <EventGuests />
+            </>
+            : <>
+                <EventGuests />
+            </>
+        }
+    </>
+    
 }

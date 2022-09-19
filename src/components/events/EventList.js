@@ -4,12 +4,13 @@ import "./Events.css"
 
 export const EventList = () => {
     const [events, setEvents] = useState([])
+    const [filteredEvents, setFiltered] = useState([])
 
     const localReaperUser = localStorage.getItem("reaper_user")
     const reaperUserObject = JSON.parse(localReaperUser)
 
     useEffect(() => {
-        fetch(`http://localhost:8088/events?_expand=user`)
+        fetch(`http://localhost:8088/events?_expand=user&_embed=eventGuests`)
             .then(response => response.json())
             .then((eventArray) => {
                 setEvents(eventArray)
@@ -17,6 +18,21 @@ export const EventList = () => {
             })
        
     }, [])
+
+
+    useEffect(() => {
+        const filtered = []
+        events.map(
+            (event) => {
+                if (reaperUserObject.id === event.userId || reaperUserObject.id == event.eventGuests.userId) {
+                    filtered.push(event)
+                }
+                
+            }
+        )
+        setFiltered(filtered)
+    }, [events])
+
 
     const deleteButton = (event) => {
         return <button onClick={() => {
@@ -50,7 +66,7 @@ export const EventList = () => {
 
         <article className="events">
             {
-                events.map(
+                filteredEvents.map(
                     (event) => <Event key={`event--${event.id}`}
                         id={event.id}
                         eventName={event.name}
