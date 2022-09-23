@@ -5,7 +5,7 @@ import { Link } from "react-router-dom"
 
 
 
-export const Movie = ({ id, image, title, releaseDate }) => {
+export const Movie = ({ id, image, title, releaseDate, getWatchList, userWatchList }) => {
 
 
     const localReaperUser = localStorage.getItem("reaper_user")
@@ -37,21 +37,44 @@ export const Movie = ({ id, image, title, releaseDate }) => {
         })
             .then(response => response.json())
             .then(() => {
-                
+                getWatchList()
             })
     }
 
+    let isInWatchlist = false
     return <section className="movie">
         <div>
             <Link to={`/movies/${id}`}><img src={image}></img></Link>
         </div>
         <div>{title}</div>
         <div>{releaseDate}</div>
-        <button
-            onClick={(clickEvent) => handleSaveButtonClick(clickEvent)}
-            className="movie_add">
-                Add To Watchlist
-        </button>
+            
+            {   
+                userWatchList.map(
+                    (movie) => {
+                        
+                        if (movie.movieId === id) {
+                            isInWatchlist = true
+
+                        }
+                    }
+                )
+
+            }
+            {
+                !isInWatchlist && <button
+                onClick={(clickEvent) => handleSaveButtonClick(clickEvent)}
+                className="movie_add">
+                                    Add To Watchlist
+                </button>
+            }
+
+                        
+                    
+                
+                
+                
+            
             
     </section>
 }

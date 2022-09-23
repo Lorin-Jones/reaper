@@ -32,16 +32,12 @@ export const EventDetails = () => {
     <div>Time: {event.time}</div>
     
     </section>
-        {
-            reaperUserObject.id === event.userId
-            ? <>
+        
+        
                 <EventUsersList />
-                <EventGuests />
-            </>
-            : <>
-                <EventGuests />
-            </>
-        }
+               
+           
+        
     </>
     
 }
