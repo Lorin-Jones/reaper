@@ -3,35 +3,44 @@ import { Event } from "./Event"
 import "./Events.css"
 
 export const EventList = () => {
-    const [events, setEvents] = useState([])
-    const [filteredEvents, setFiltered] = useState([])
+    const [hostedEvents, setHostedEvents] = useState([])
+    const [invitedEvents, setInvitedEvents] = useState([])
 
     const localReaperUser = localStorage.getItem("reaper_user")
     const reaperUserObject = JSON.parse(localReaperUser)
 
     useEffect(() => {
-        fetch(`http://localhost:8088/events?_expand=user&_embed=eventGuests`)
+        fetch(`http://localhost:8088/events?userId=${reaperUserObject.id}&_expand=user&_embed=eventGuests`)
             .then(response => response.json())
             .then((eventArray) => {
-                setEvents(eventArray)
+                setHostedEvents(eventArray)
                 
             })
        
     }, [])
 
-
     useEffect(() => {
-        const filtered = []
-        events.map(
-            (event) => {
-                if (reaperUserObject.id === event.userId || reaperUserObject.id == event.eventGuests.userId) {
-                    filtered.push(event)
-                }
+        fetch(`http://localhost:8088/events?_expand=user&_embed=eventGuests`)
+            .then(response => response.json())
+            .then((eventArray) => {
+                let guestArray = []
+                eventArray.map(
+                    (event) => {
+                        event.eventGuests.map(
+                            (guest) => {
+                                if (guest.userId === reaperUserObject.id) {
+                                    guestArray.push(event)
+                                }
+                            }
+                        )
+                    }
+                )
+                setInvitedEvents(guestArray)
                 
-            }
-        )
-        setFiltered(filtered)
-    }, [events])
+            })
+       
+    }, [])
+    
 
 
     const deleteButton = (event) => {
@@ -43,14 +52,14 @@ export const EventList = () => {
                     })
                     .then(() => {
                         
-                            fetch(`http://localhost:8088/events?_expand=user`)
+                            fetch(`http://localhost:8088/events?userId=${reaperUserObject.id}_expand=user`)
                                 .then(response => response.json())
                                 .then((eventArray) => {
-                                    setEvents(eventArray)
+                                    setHostedEvents(eventArray)
                                     
                                 })
                            
-                            }, [events])
+                            }, [hostedEvents])
                         
                     
     
@@ -62,22 +71,39 @@ export const EventList = () => {
     
 
     return <>
+    
         <h2>Events</h2>
 
         <article className="events">
             {
-                filteredEvents.map(
+                hostedEvents.map(
                     (event) => <Event key={`event--${event.id}`}
                         id={event.id}
                         eventName={event.name}
                         host={event.user.fullName}
                         hostId={event.user.id}
+                        isHost={true}
                         deleteButton={deleteButton(event)}
                         eventObj={event} />     
                 )
             }
         </article>
-    </>
+        <article className="events">
+            {
+                invitedEvents.map(
+                    (event) => <Event key={`event--${event.id}`}
+                        id={event.id}
+                        eventName={event.name}
+                        host={event.user.fullName}
+                        hostId={event.user.id}
+                        isHost={false}
+                        deleteButton={deleteButton(event)}
+                        eventObj={event} />     
+                )
+            }
+        </article>
+        
+        </>
 }
                     // <section className="event">
                     //     <header>{event.name}</header>

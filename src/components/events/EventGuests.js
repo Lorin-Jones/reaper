@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
-import { EventUser } from "./EventUser"
+import { EventGuest } from "./EventGuest"
+
 
 
 
@@ -28,7 +29,7 @@ export const EventGuests = () => {
                     {
                         
                         guests.map(
-                            (guest) => <EventUser key={`event_user--${guest.id}`}
+                            (guest) => <EventGuest key={`event_user--${guest.id}`}
                             id={guest.id}
                             name={guest.user.fullName} />
                             
