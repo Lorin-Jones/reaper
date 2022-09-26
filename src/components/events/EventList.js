@@ -105,13 +105,3 @@ export const EventList = () => {
         
         </>
 }
-                    // <section className="event">
-                    //     <header>{event.name}</header>
-                    //     <div>Hosted by: {event.user.fullName} </div>
-                    //     <div>Location: {event.user.address}</div>
-                    //     <div>Date: {event.date}</div>
-                    //     <div>Time: {event.time}</div>
-                    //     <button>
-                            
-                    //     </button>
-                    // </section>

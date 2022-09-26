@@ -1,6 +1,3 @@
-//needs to print userlist with "INVITE" button. 
-//clicking button posts an eventguest entry in database with userId and eventId
-//
 
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
@@ -46,6 +43,7 @@ export const EventInvites = () => {
         const eventItemToSendToApi = {
             eventId: eventId,
             userId: user.id,
+            hasVoted: false
             
         }
 

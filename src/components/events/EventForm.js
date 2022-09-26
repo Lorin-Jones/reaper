@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 
 export const EventForm = () => {
-    // TODO: Provide initial state for profile
+    
     const [eventObj, setEvent] = useState({
         name: "",
         date: "",
@@ -13,24 +13,7 @@ export const EventForm = () => {
     const navigate = useNavigate()
     const localReaperUser = localStorage.getItem("reaper_user")
     const reaperUserObject = JSON.parse(localReaperUser)
-    // const [feedback, setFeedback] = useState("")
 
-    // useEffect(() => {
-    //     if (feedback !== "") {
-    //         // Clear feedback to make entire element disappear after 3 seconds
-    //         setTimeout(() => setFeedback(""), 3000);
-    //     }
-    // }, [feedback])
-
-    // TODO: Get employee profile info from API and update state
-    // useEffect(() => {
-    //     fetch(`http://localhost:8088/users?userId=${reaperUserObject.id}`)
-    //        .then(response => response.json())
-    //        .then((data) => {
-    //            const userObject = data[0]
-    //            setProfile(userObject)
-    //        })
-    // }, [])
   
     const handleSaveButtonClick = (event) => {
         event.preventDefault()
@@ -42,7 +25,13 @@ export const EventForm = () => {
             time: eventObj.time,
             userId: reaperUserObject.id
         }
-        return fetch(`http://localhost:8088/events`, {
+
+        // const eventUserToSendToApi = {
+        //     userId: reaperUserObject.id,
+        //     eventId: event.id,
+
+        // }
+        fetch(`http://localhost:8088/events`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

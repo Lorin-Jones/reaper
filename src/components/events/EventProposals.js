@@ -1,15 +1,4 @@
-//this should render all the items in the logged in user's watchlist 
-//selecting a movie to watch will render the movie in the eventMovies watchlist
-//add movie button will add eventmovie to the api and then fetch the current state of eventMovie
-//selecting a movie will remove the movie from the user's watchlist.
-//html should only print the user's movie if it is not in the eventMovie watchlist
-// eventmovies is distinct module, so eventMovies state should pass as a prop to EventMovies.
-//refreshing eventMovies should refresh html in EventMovies module
-//render should handle filtering, not fetch calls.
-//when button updates eventMovies, eventMovies needs to be watching and able to rerender
-//state of listMovies should be passed as prop to eventMovies
-//user can only add one movie to eventMovies
-//on click. map through eventMovies, if creatorId !== reaperUserObj.id, return fetch
+
 import { useState, useEffect } from "react"
 import { Link, useParams } from "react-router-dom"
 import "../watch/WatchList.css"
@@ -90,27 +79,6 @@ export const EventProposals = ({}) => {
             })
     }
 
-    // const deleteButton = (movie) => {
-    //     return <button onClick={() => {
-    //         listMovies.map((listItem) => {
-    //             if (listItem.movieId === movie.id) {
-    //                 fetch(`http://localhost:8088/watchList/${listItem.id}`, {
-    //                     method: "DELETE"
-    //                 })
-    //                 .then(() => {
-    //                     fetch(`http://localhost:8088/watchList?_expand=user&userId=${reaperUserObject.id}`)
-    //                     .then(response => response.json())
-    //                     .then((listArray) => {
-    //                         setList(listArray)
-    //                     })
-    //                 })
-
-    //             }
-    //         })
-    //     }} className="movie_delete">Remove From Watchlist</button>
-
-    // }
- 
      
     return (
         <>
