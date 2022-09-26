@@ -6,17 +6,33 @@ export const EventMovies = ({eventMovieArray}) => {
 
         const { eventId } = useParams()
         const [eventMovies, setEventMovies] = useState([])
+        const [eventGuest, setEventGuest] = useState({})
         const [filteredEventMovies, setFiltered] = useState([])
         
         const localReaperUser = localStorage.getItem("reaper_user")
         const reaperUserObject = JSON.parse(localReaperUser)
 
-    
+    useEffect(() => {
+        fetch(`http://localhost:8088/eventMovies?_expand=event&eventId=${eventId}`)
+        .then(response => response.json())
+        .then((eventArray) => {
+            setEventMovies(eventArray)
+        })
+    }, [eventMovieArray])
+
+    useEffect(() => {
+        fetch(`http://localhost:8088/eventGuests?eventId=${eventId}&userId=${reaperUserObject.id}`)
+        .then(response => response.json())
+        .then((guestObj) => {
+            setEventGuest(guestObj[0])
+        })
+    }, [])
+
     
 
     useEffect(() => {
             const filteredMovies = []
-        Promise.all(eventMovieArray.map(
+        Promise.all(eventMovies.map(
             (movie) =>
                 fetch(`https://api.themoviedb.org/3/movie/${movie.movieId}?api_key=87b7aa024b105f288752b38c3a90101d&with_genres=27&language=en-US`)
                     .then(response => response.json())
@@ -27,11 +43,11 @@ export const EventMovies = ({eventMovieArray}) => {
                     .then(() => {
                         setFiltered(filteredMovies)
                     })
-    }, [eventMovieArray])
+    }, [eventMovies])
 
     
 
-    const HandleSaveButtonClick = (clickEvent, eventMovie) => {
+    const HandleSaveButtonClick = (clickEvent, eventMovie, eventGuest) => {
         clickEvent.preventDefault()
 
 
@@ -42,22 +58,48 @@ export const EventMovies = ({eventMovieArray}) => {
             creatorId: eventMovie.creatorId
         }
 
-        return fetch(`http://localhost:8088/eventMovies/${eventMovie.id}`, {
+        let voted = {
+            userId: eventGuest.userId,
+            eventId: eventGuest.eventId,
+            hasVoted: true
+            
+
+        }
+        
+        
+        fetch(`http://localhost:8088/eventGuests/${eventGuest.id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(increment)
+            body: JSON.stringify(voted)
         })
             .then(response => response.json())
             .then(() => {
-                fetch(`http://localhost:8088/eventMovies?_expand=event&eventId=${eventId}`)
+                return fetch(`http://localhost:8088/eventGuests?eventId=${eventId}&userId=${reaperUserObject.id}`)
+            .then(response => response.json())
+            .then((guestObj) => {
+                setEventGuest(guestObj[0])
+                fetch(`http://localhost:8088/eventMovies/${eventMovie.id}`, {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(increment)
+                })
                     .then(response => response.json())
-                    .then((eventArray) => {
-                        setEventMovies(eventArray)
-            })
-            })
-    }
+                    .then(() => {
+                        
+                        return fetch(`http://localhost:8088/eventMovies?_expand=event&eventId=${eventId}`)
+                            .then(response => response.json())
+                            .then((eventArray) => {
+                                
+                                setEventMovies(eventArray)
+                        })
+                        })
+                    })
+                })
+    }   
 
 
     return ( 
@@ -69,30 +111,42 @@ export const EventMovies = ({eventMovieArray}) => {
             {
                 filteredEventMovies.map(
                     (filteredMovie) => 
-                     <section className="movie">
-                    <div>
-                        <Link to={`/movies/${filteredMovie.id}`}><img src={`https://image.tmdb.org/t/p/w154${filteredMovie.poster_path}`}></img></Link>
-                    </div>
-                    <div>{filteredMovie.title}</div>
-                    <div>{filteredMovie.release_date}</div>
-                        {
-                            eventMovies.map(
-                                (eventMovie) => {
-                                    if (filteredMovie.id === eventMovie.movieId) {
-                                        return <>
-                                            <div>Votes: {eventMovie.numOfVotes}</div>
-                                            <button
-                                                onClick={(clickEvent) => HandleSaveButtonClick(clickEvent, eventMovie)}
-                                                className="movie_add">
-                                                    Vote on Movie
-                                            </button>
-                                        </>
+                    {
+                        
+                       return eventMovies.map(
+                            (eventMovie) => {
+                                if (eventMovie.movieId === filteredMovie.id) {
+                                        return <section className="movie">
+                                    <div>
+                                        <Link to={`/movies/${filteredMovie.id}`}><img src={`https://image.tmdb.org/t/p/w154${filteredMovie.poster_path}`}></img></Link>
+                                    </div>
+                                    <div>{filteredMovie.title}</div>
+                                    <div>{filteredMovie.release_date}</div>
+                                    <div>Votes: {eventMovie.numOfVotes}</div>
+                                    {
                                         
-                                    }   
+                                       (!eventGuest.hasVoted) 
+                                        ? <>
+                                                    <button
+                                                        onClick={(clickEvent) => HandleSaveButtonClick(clickEvent, eventMovie, eventGuest)}
+                                                        className="movie_add">
+                                                            Vote on Movie
+                                                    </button>
+                                        </> 
+                                        :<></>
+                                        
+                                                        
+                                    }
+                                </section>
+
                                 }
-                            )
-                        }
-                    </section>
+                            }       
+                                        
+                                     
+                                
+                        )
+                        
+                    }
                     
                 )
             }

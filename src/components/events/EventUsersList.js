@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { EventGuest } from "./EventGuest"
-import { EventMovies } from "./EventMovies"
 import { EventProposals } from "./EventProposals"
 import { EventUser } from "./EventUser"
 
@@ -49,23 +48,6 @@ export const EventUsersList = () => {
         []
     )
     
-    
-    
-    // useEffect(
-    //     () => {
-    //         let nonHosts = []
-    //         users.map(
-    //             (user) => {
-    //                 if (reaperUserObject.id !== event.userId) {
-    //                     nonHosts.push(user)
-    //                 }
-    //             }
-    //         )
-    //         setNotHost(nonHosts)
-    //     }, 
-    //     [event]
-    // )
-
   
 
     return <>
