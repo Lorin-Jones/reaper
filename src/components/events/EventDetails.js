@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 
-import { EventGuests } from "./EventGuests"
+
 
 import { EventUsersList } from "./EventUsersList"
 

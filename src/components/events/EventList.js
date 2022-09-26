@@ -28,7 +28,7 @@ export const EventList = () => {
                     (event) => {
                         event.eventGuests.map(
                             (guest) => {
-                                if (guest.userId === reaperUserObject.id) {
+                                if (guest.userId === reaperUserObject.id && guest.isHost === false) {
                                     guestArray.push(event)
                                 }
                             }

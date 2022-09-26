@@ -25,12 +25,13 @@ export const EventForm = () => {
             time: eventObj.time,
             userId: reaperUserObject.id
         }
+        const eventUserToSendToApi = {
+            userId: reaperUserObject.id,
+            hasVoted: false,
+            isHost: true,
 
-        // const eventUserToSendToApi = {
-        //     userId: reaperUserObject.id,
-        //     eventId: event.id,
-
-        // }
+        } 
+        
         fetch(`http://localhost:8088/events`, {
             method: "POST",
             headers: {
@@ -39,8 +40,23 @@ export const EventForm = () => {
             body: JSON.stringify(eventToSendToApi)
         })
             .then(response => response.json())
-            .then(() => {
-                navigate("/events")
+            .then((newEventFromApi) => {
+
+                eventUserToSendToApi.eventId = newEventFromApi.id
+
+                fetch(`http://localhost:8088/eventGuests`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(eventUserToSendToApi)
+            })
+                .then(response => response.json())
+                .then(() => {
+                    navigate("/events")
+
+                })
+                
                 // setFeedback("New Event Created")
             })
     }

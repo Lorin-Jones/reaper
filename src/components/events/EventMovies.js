@@ -26,7 +26,7 @@ export const EventMovies = ({eventMovieArray}) => {
         .then((guestObj) => {
             setEventGuest(guestObj[0])
         })
-    }, [])
+    }, [eventId])
 
     
 
@@ -61,7 +61,8 @@ export const EventMovies = ({eventMovieArray}) => {
         let voted = {
             userId: eventGuest.userId,
             eventId: eventGuest.eventId,
-            hasVoted: true
+            hasVoted: true,
+            isHost: eventGuest.isHost
             
 
         }
@@ -123,21 +124,24 @@ export const EventMovies = ({eventMovieArray}) => {
                                     <div>{filteredMovie.title}</div>
                                     <div>{filteredMovie.release_date}</div>
                                     <div>Votes: {eventMovie.numOfVotes}</div>
-                                    {
-                                        
-                                       (!eventGuest.hasVoted) 
-                                        ? <>
-                                                    <button
-                                                        onClick={(clickEvent) => HandleSaveButtonClick(clickEvent, eventMovie, eventGuest)}
-                                                        className="movie_add">
-                                                            Vote on Movie
-                                                    </button>
-                                        </> 
-                                        :<></>
-                                        
-                                                        
-                                    }
+                                    
+                                        {
+                                            
+                                            (!eventGuest.hasVoted) 
+                                                ? <>
+                                                            <button
+                                                                onClick={(clickEvent) => HandleSaveButtonClick(clickEvent, eventMovie, eventGuest)}
+                                                                className="movie_vote">
+                                                                    Vote on Movie
+                                                            </button>
+                                                </> 
+                                                :<></>
+                                            
+                                                            
+                                        }
+                                
                                 </section>
+
 
                                 }
                             }       
