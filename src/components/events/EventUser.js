@@ -14,7 +14,8 @@ export const EventUser = ({ name, id, eventId, alreadyinvited, getAllGuests }) =
         const guestItemToSendToApi = {
             userId: id,
             eventId: parseInt(eventId),
-            hasVoted: false
+            hasVoted: false,
+            isHost: false
         }
     
         return fetch(`http://localhost:8088/eventGuests`, {

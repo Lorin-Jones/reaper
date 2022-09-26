@@ -70,7 +70,7 @@ export const EventUsersList = () => {
                                                 }
                                             }
                                         )
-                                        if (!alreadyInvited) {
+                                        if (!alreadyInvited) { //add !isHost 
                                             return <EventUser key={`event_user--${user.id}`}
                                             id={user.id}
                                             name={user.fullName} 
