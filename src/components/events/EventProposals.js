@@ -99,6 +99,7 @@ export const EventProposals = ({}) => {
                                 }
                             }
                         )
+                        
                         if (!inMovieList) {
                             return <section className="movie">
                         <div>

@@ -1,6 +1,7 @@
 //fetch movie data base for only movies from the horror genre
 import { useState, useEffect } from "react"
 import { Movie } from "./Movie"
+import Button from 'react-bootstrap/Button';
 import "./Movies.css"
 
 export const MovieList = () => {
@@ -68,17 +69,19 @@ export const MovieList = () => {
     }
 
         return <>
-
-                <button
+                
+                <Button
+                    variant="danger"
                     onClick={(clickEvent) => pageDownButton(clickEvent)}
                     className="page">
                     Page Down
-                </button>
-                <button
+                </Button>
+                <Button
+                    variant="danger"
                     onClick={(clickEvent) => pageUpButton(clickEvent)}
                     className="page">
                     Page Up
-                </button>
+                </Button>
       
         <h2>List of Movies</h2>
 
