@@ -1,13 +1,25 @@
 .movies {
     display: flex; 
-    flex-direction: column;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: flex-start;
+    
+    
+    
 }
 
 .movie {
     background-color: rgb(243, 221, 243);
     border: 1px dotted darkmagenta;
-    padding: 0.7rem;
-    margin: 0.5rem;
+    padding: 1rem;
+    margin: 5px;
+    height: auto;
+    flex-basis: 17%;
+    
+
+    
+    
 }
 
 .movie_add {
