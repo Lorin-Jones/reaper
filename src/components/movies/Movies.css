@@ -16,10 +16,22 @@
     margin: 5px;
     height: auto;
     flex-basis: 17%;
-    
+}
 
-    
-    
+.page {
+    width: 110px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.page-buttons {
+    display: flex;
+    grid-gap: 24px;
+    max-width: 300px;
 }
 
 .movie_add {

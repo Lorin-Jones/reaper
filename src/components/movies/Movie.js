@@ -67,14 +67,6 @@ export const Movie = ({ id, image, title, releaseDate, getWatchList, userWatchLi
                 className="movie_add">
                                     Add To Watchlist
                 </button>
-            }
-
-                        
-                    
-                
-                
-                
-            
-            
+            }    
     </section>
 }

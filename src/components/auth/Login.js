@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom"
 import Button from 'react-bootstrap/Button';
 import backgroundVideo from "/home/walter/workspace/reaper/src/assets/VCRBlueScreen.mp4"
 import "./Login.css"
+import { REAPER_LOGO } from "../../assets/constants";
+import { Box } from "@mui/material";
  
  
 export const Login = () => {
@@ -36,7 +38,9 @@ export const Login = () => {
             <section className="outer-container">
                 <div className="inner-container">
                         <form className="video-overlay" onSubmit={handleLogin}>
-                            <img src="https://res.cloudinary.com/dlr2tm7qr/image/upload/v1664422067/ReaperLogoFinal_hjhseb.png" class="main" ></img>
+                            <Box px={4} py={2}>
+                                <img src={REAPER_LOGO} class="main" ></img>
+                            </Box>
                             <fieldset class="fieldset1">
                                 <label htmlFor="inputEmail"></label>
                                 <input type="email"
