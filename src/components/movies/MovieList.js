@@ -1,12 +1,12 @@
 //fetch movie data base for only movies from the horror genre
-import { useState, useEffect } from "react"
+import { useState, useEffect, useMemo } from "react"
 import { Movie } from "./Movie"
 import Button from 'react-bootstrap/Button';
 import "./Movies.css"
 
 export const MovieList = () => {
     const [movies, setMovies] = useState([])
-    const [page, setPage] = useState({})
+    const [page, setPage] = useState()
     const [userWatchList, setUserWatchList] = useState([])
 
     const localReaperUser = localStorage.getItem("reaper_user")
@@ -19,22 +19,18 @@ export const MovieList = () => {
                     setUserWatchList(watchListArray)
                 })
     }
-    
-    getWatchList()
 
     useEffect(
         () => {
-            
-
             fetch(`https://api.themoviedb.org/3/discover/movie?api_key=87b7aa024b105f288752b38c3a90101d&with_genres=27&language=en-US&page=1`)
                 .then(response => response.json())
                 .then((horrorListObj) => {
                     setMovies(horrorListObj.results)
+                    console.log('page', horrorListObj.page)
                     setPage(horrorListObj.page)
                 })
         
         }, [])
-    //fetch user's watchlist in a function. store the function as a prop. pass prop to movie mod.
     
     const pageUpButton = (event) => {
         event.preventDefault()
@@ -69,19 +65,22 @@ export const MovieList = () => {
     }
 
         return <>
-                
-                <Button
-                    variant="danger"
-                    onClick={(clickEvent) => pageDownButton(clickEvent)}
-                    className="page">
-                    Page Down
-                </Button>
-                <Button
-                    variant="danger"
-                    onClick={(clickEvent) => pageUpButton(clickEvent)}
-                    className="page">
-                    Page Up
-                </Button>
+                <div className="button-container">
+                    <div className="page-buttons">
+                        <Button
+                            variant="danger"
+                            onClick={(clickEvent) => pageDownButton(clickEvent)}
+                            className="page">
+                            Page Down
+                        </Button>
+                        <Button
+                            variant="danger"
+                            onClick={(clickEvent) => pageUpButton(clickEvent)}
+                            className="page">
+                            Page Up
+                        </Button>
+                    </div>
+                </div>
       
         <h2>List of Movies</h2>
 

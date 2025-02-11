@@ -1,0 +1,1 @@
+export const REAPER_LOGO = "https://res.cloudinary.com/dlr2tm7qr/image/upload/v1664422067/ReaperLogoFinal_hjhseb.png"
