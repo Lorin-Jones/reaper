@@ -1,16 +1,20 @@
 import { Link, useNavigate } from "react-router-dom"
 import "./NavBar.css"
 import { AppBar, Box, Button, Toolbar } from "@mui/material"
+import { makeStyles } from "@mui/styles"
 
 export const UserNav = () => {
     const navigate = useNavigate()
+    const classes = useStyles()
 
     return (
         <Box sx={{flexGrow: 1}}>
             <AppBar position="static">
-                <Toolbar>
+                <Toolbar className={classes.toolbar}>
                     <Button color={'inherit'} component={Link} to={'/movies'}>{'Movies'}</Button>
                     <Button color={'inherit'} component={Link} to={'/watchlist'}>{'Watch List'}</Button>
+                    <Button color={'inherit'} component={Link} to={'/events'}>{'Events'}</Button>
+                    <Button color={'inherit'} component={Link} to={'/new-event'}>{'New Event'}</Button>
                     {
                         localStorage.getItem("reaper_user")
                             ? 
@@ -24,36 +28,11 @@ export const UserNav = () => {
             </AppBar>
         </Box>
     )
-
-    // return (
-       
-    //     <ul className="navbar">
-    //         <li className="navbar__item active">
-    //             <Link className="navbar__link" to="/users">Users</Link>
-    //         </li>
-    //         <li className="navbar__item active">
-    //             <Link className="navbar__link" to="/movies">Movies</Link>
-    //         </li>
-    //         <li className="navbar__item active">
-    //             <Link className="navbar__link" to="/watchlist">Watch List</Link>
-    //         </li>
-    //         <li className="navbar__item active">
-    //             <Link className="navbar__link" to="/events">Events</Link>
-    //         </li>
-    //         <li className="navbar__item active">
-    //             <Link className="navbar__link" to="/new-event">Create Event</Link>
-    //         </li>
-            
-    //         {
-    //             localStorage.getItem("reaper_user")
-    //                 ? <li className="navbar__item navbar__logout">
-    //                     <Link className="navbar__link" to="" onClick={() => {
-    //                         localStorage.removeItem("reaper_user")
-    //                         navigate("/", {replace: true})
-    //                     }}>Logout</Link>
-    //                 </li>
-    //                 : ""
-    //         }
-    //     </ul>
-    // )
 }
+
+const useStyles = makeStyles(() => ({
+    toolbar: {
+        display: 'flex',
+        justifyContent: 'flex-end'
+    }
+}))
