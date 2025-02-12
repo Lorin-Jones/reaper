@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom"
 import "./NavBar.css"
 import { AppBar, Box, Button, Toolbar } from "@mui/material"
 import { makeStyles } from "@mui/styles"
+import { REAPER_LOGO } from "../../assets/constants"
 
 export const UserNav = () => {
     const navigate = useNavigate()
@@ -17,12 +18,12 @@ export const UserNav = () => {
                     <Button color={'inherit'} component={Link} to={'/new-event'}>{'New Event'}</Button>
                     {
                         localStorage.getItem("reaper_user")
-                            ? 
-                            <Button color={'inherit'} onClick={() => {
-                                localStorage.removeItem("reaper_user")
-                                navigate("/", {replace: true})
-                            }}>{'Logout'}</Button>
-                            : ""
+                        ? 
+                        <Button color={'inherit'} onClick={() => {
+                            localStorage.removeItem("reaper_user")
+                            navigate("/", {replace: true})
+                        }}>{'Logout'}</Button>
+                        : ""
                     }
                 </Toolbar>
             </AppBar>
@@ -34,5 +35,5 @@ const useStyles = makeStyles(() => ({
     toolbar: {
         display: 'flex',
         justifyContent: 'flex-end'
-    }
+    },
 }))

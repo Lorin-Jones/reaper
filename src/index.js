@@ -17,8 +17,12 @@ const theme = createTheme({
         },
         secondary: {
             main: '#0f4c5c'
+        },
+        background: {
+            main: '#0F4D5C33'
         }
-    }
+    },
+    spacing: 8,
 })
 
 const container = document.getElementById("root")

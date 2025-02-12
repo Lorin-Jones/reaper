@@ -7,6 +7,5 @@ export const ApplicationViews = () => {
 
     if (reaperUserObject) {
         return UserViews()
-
     }
 }
