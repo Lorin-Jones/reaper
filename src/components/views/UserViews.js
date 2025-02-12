@@ -9,6 +9,7 @@ import { MovieList } from "../movies/MovieList"
 import { UserList } from "../users/UserList"
 // import { UserProfile } from "../users/UserProfile"
 import { WatchList } from "../watch/WatchList"
+import { Header } from "../header/header"
 
 // import { Profile } from "../profile/Profile"
 
@@ -17,8 +18,7 @@ export const UserViews = () => {
         <Routes>
             <Route path="/" element={
                 <>
-                    <h1>Reaper</h1>
-                    <div>A Friendly Fright Night Movie Picker</div>
+                    <Header />
 
                     <Outlet />
                 </>
